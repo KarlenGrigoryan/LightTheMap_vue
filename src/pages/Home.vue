@@ -47,16 +47,21 @@
 
                 <div class="input-group">
                   <span class="input-group-addon modal-icon"><i class="mr-1 zmdi zmdi-square-right "></i></span>
-                  <input type="text" id="addon1" class="form-control" placeholder="Leave your email with us">
+                  <input type="text" id="addon1" class="form-control" placeholder="Leave your email with us" v-model="email">
                   <span class="input-group-btn">
-                            <button class="btn btn-raised btn-default" type="button">Submit</button>
-                          </span>
+                    <button class="btn btn-raised btn-default" type="button" @click="submitEmail">Submit</button>
+                  </span>
                 </div>
                 <label class="control-label modal-text-color" for="addon1">Submit your email above and we will get back to you and
                   learn all about your initiative. We will only use your email for our private conversation. No
                   cheating!</label>
               </div>
-
+              <div class="alert alert-success alert-dismissible fade show" role="alert" data-dismiss="alert" v-if="modalAlert">
+                <strong>Success! </strong>{{ modalMessage }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -140,7 +145,7 @@
           <div class="card-body card-body-big card-body-big-bg  mb-6">
             <div class="row">
               <div class="map-right-cont">
-                <h3 class="map-text">10 out of 300 cities in India have initiatives to mentor kids in need</h3>
+                <h3 class="map-text">{{citiesCount}} out of 300 cities in India have initiatives to mentor kids in need</h3>
                 <p class="font-size">Help us light the map by informing us about inspiring initiatives in your city.
                   This will help our users find these initiatives and contribute to them.
                   Our aim is have at least one initiative in every locality.</p>
@@ -159,11 +164,7 @@
                 <i class="zmdi zmdi-star"></i> INITIATIVES BY CITY</h4>
             </div>
             <div class="list-group">
-              <a href="#" class="list-group-item list-group-item-action withripple"> Bangalore </a>
-              <a href="#" class="list-group-item list-group-item-action withripple"> New Delhi </a>
-              <a href="#" class="list-group-item list-group-item-action withripple"> Pune </a>
-              <a href="#" class="list-group-item list-group-item-action withripple"> Chennai </a>
-              <a href="#" class="list-group-item list-group-item-action withripple"> Mumbai </a>
+              <router-link :to="{ name: 'FindInitiative', query: { city: `${city._id}` } }" class="list-group-item list-group-item-action withripple" v-for="(city, key, index) in popularCities" :key="key"> {{ city._id }} </router-link>
             </div>
           </div>
         </div>
@@ -177,6 +178,15 @@
 
     export default {
         name: "home",
+        data() {
+          return {
+            modalAlert: false,
+            citiesCount: 0,
+            popularCities: [],
+            email: '',
+            modalMessage: ''
+          }
+        },
         mounted () {
             let map = new google.maps.Map(document.getElementById('map'), {
               zoom: 4,
@@ -393,6 +403,43 @@
                 }
               })(marker, i));
             }
+          }
+        },
+        created() {
+          let _this = this;
+          // Get total cities count
+          this.$http.get('http://www.localhost:8000/api/get-cities-count').then(response => {
+                // get body data
+                _this.citiesCount = response.body.data.count;
+              }, response => {
+                // error callback
+              });
+          // Get popular cities
+          this.$http.get('http://www.localhost:8000/api/get-popular-cities').then(response => {
+                // get body data
+                _this.popularCities = response.body.data;
+                console.log(response);
+              }, response => {
+                // error callback
+              });
+        },
+        methods: {
+          // Add initiative
+          submitEmail() {
+            let _this = this;
+            let body = {
+              email: this.email
+            }
+            console.log(body)
+            this.$http.post('http://www.localhost:8000/api/add-initiative', body).then(response => {
+                // get body data
+                if(response.status === 200) {
+                  _this.modalAlert = true;
+                  _this.modalMessage = response.body.data.message
+                }
+              }, response => {
+                // error callback
+              });
           }
         }
     }

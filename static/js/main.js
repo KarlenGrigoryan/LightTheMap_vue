@@ -8,3 +8,6 @@ $(document).keydown(function (event) {
 $(document).on("contextmenu", function (e) {
     // e.preventDefault();
 });
+$(document).ready(function() {
+    
+})

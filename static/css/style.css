@@ -15835,7 +15835,7 @@ td.margin-top-table a{
 
 .listing-filter li{
     display: inline-block;
-    padding: 7px 10px 7px 7px;
+    padding: 7px 50px 7px 7px;
 }
 .listing-filter li img{
     vertical-align: bottom;
@@ -15844,13 +15844,23 @@ td.margin-top-table a{
 .listing-filter li.top{
     vertical-align: top;
     outline: rgba(0, 0, 0, .870588) none 0;
+    text-align: center;
     margin-right: 10px;
-    background-color: #eee;
     color: rgba(0, 0, 0, .87);
     padding: 0 15px;
     font-size: 10px;
 }
-
+.right-smile{
+  border: 1px solid #eee;
+  width: 70px;
+}
+.bottom-right-buttons{
+  display: inline-flex;
+}
+.same-btn{
+  min-width: 70px;
+  max-width: 120px;
+}
 .listing-filter li.top i {
     margin-right: 10px;
 }
@@ -15899,10 +15909,6 @@ td.margin-top-table a{
     float: right;
 }
 
-.desktop-hide{
-    display: none;
-}
-
 .cart-my-class{
     margin-bottom: 0;
     background-color: transparent
@@ -15942,18 +15948,10 @@ td.margin-top-table a{
         padding: 0;
     }
 
-    .desktop-hide{
-        display: block;
-    }
-
-    .mobile-hide{
-        display: none;
-    }
-
     .ms-site-container .card-body-big-bg{
         padding-top: 0 !important;
         padding-left: 30px !important;
-        margin-bottom: 2rem !important;
+        margin: 20px 0 2rem 0 !important;
     }
 
     .container.mt-6 .row{

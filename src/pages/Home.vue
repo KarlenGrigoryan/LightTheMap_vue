@@ -100,30 +100,6 @@
     </div>
     <div class="container mt-6">
       <div class="row">
-        <div class="col-md-4 desktop-hide">
-          <div class="card-body card-body-big card-body-big-bg  mb-6">
-
-            <div class="row masonry-container">
-
-              <div class="masonry-item">
-
-                <h3 class="map-text">10 out of 300 cities in India have initiatives to mentor kids in need</h3>
-                <!--<h3 class="map-text">intiatives to mentor kids in need</h3>-->
-
-                <a href="#"
-                   class="btn btn-raised btn-default mobil-button-position"
-                   data-toggle="modal"
-                   data-target="#ms-account-modal-2"
-                >Add Initiative
-                  <div class="ripple-container"></div>
-                </a>
-
-              </div>
-
-            </div>
-            <!-- row -->
-          </div>
-        </div>
         <div class="col-md-5">
 
           <div id="map"></div>
@@ -141,7 +117,7 @@
 
 
         </div>
-        <div class="col-md-4 mobile-hide">
+        <div class="col-md-4">
           <div class="card-body card-body-big card-body-big-bg  mb-6">
             <div class="row">
               <div class="map-right-cont">
@@ -168,7 +144,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>

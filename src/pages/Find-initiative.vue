@@ -69,14 +69,43 @@
                       <h6 class="filter-content">Teach guitar to the local kids in {{ initiative.address.city }}</h6>
                       <span href="#" class="btn btn-raised btn-xs btn-default ops-btn" v-for="(tag, key) in initiative.tags" :key="key">{{ tag.name }}</span>
                     </li>
-                    <li aria-labelledby="dropdownMenuButton" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <router-link to="#" class="btn btn-raised btn-xs btn-default" ><i class="mr-2 fa fa-envelope-o"></i>MAIL</router-link>
-                      <div class="dropdown-menu">
-                       <span class="dropdown-item">{{ initiative.social_networks.email }}</span>
+                    <li class="top">
+                      <div>
+                        <table class="">
+                          <tr>
+                            <td>
+                              <p class="right-smile">
+                                <span class="number-ch">
+                                  <i class="ion-happy-outline"></i>{{ initiative.students }} <span v-if="!initiative.students">0</span>
+                                </span>
+                              </p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div aria-labelledby="dropdownMenuButton" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <router-link to="#" class="btn btn-raised btn-xs btn-default same-btn" >
+                                  <i class="mr-2 fa fa-envelope-o"></i>MAIL
+                                </router-link>
+                                <div class="dropdown-menu">
+                                  <span class="dropdown-item">{{ initiative.social_networks.email }}</span>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div @click="openMap(initiative.address)">
+                                <router-link to="#" class="btn btn-raised btn-xs btn-default same-btn" data-toggle="modal" data-target="#mapModal">
+                                  <i class="mr-2 fa fa-map-marker"></i>MAP
+                                </router-link>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                        <!--<div class="bottom-right-buttons">-->
+                          <!---->
+                        <!--</div>-->
                       </div>
-                      </li>
-                    <li @click="openMap(initiative.address)"><router-link to="#" class="btn btn-raised btn-xs btn-default" data-toggle="modal" data-target="#mapModal"><i class="mr-2 fa fa-map-marker"></i>MAP</router-link></li>
-                    <li class="top"><span class="number-ch"><i class="ion-happy-outline"></i>{{ initiative.students }} <span v-if="!initiative.students">0</span> </span></li>
+                    </li>
                   </ul>
                 </div>
               </router-link>
@@ -155,7 +184,7 @@
         created() {
           if(this.$route.query.city) {
             this.value = this.$route.query.city
-            this.getInitiatives(this.$route.query.city);            
+            this.getInitiatives(this.$route.query.city);
           }else {
             this.getInitiatives();
           }
@@ -172,7 +201,7 @@
               // Get initiatives by searched value
                this.$http.post('http://www.localhost:8000/api/find-initiative', body).then(response => {
                 // // get body data
-                _this.loader = false;                
+                _this.loader = false;
                 _this.initiatives = response.body.data;
               }, response => {// error callback
               });
@@ -182,7 +211,7 @@
         },
         chooseTag(tag) {
           let _this = this;
-          this.loader = true;          
+          this.loader = true;
           let index = this.tags.indexOf(tag);
 
           // Check if tag is selected
@@ -199,7 +228,7 @@
           //Filter initiatives
           this.$http.post('http://www.localhost:8000/api/find-initiative', body).then(response => {
             // Get body data
-            _this.loader = false                          
+            _this.loader = false
             _this.initiatives = response.body.data;
           }, response => {// error callback
           });
@@ -215,7 +244,7 @@
             // Get initiatives by city
             this.$http.post('http://www.localhost:8000/api/find-initiative', body).then(response => {
               // get body data
-              _this.loader = false              
+              _this.loader = false
               _this.initiatives = response.body.data;
             }, response => {// error callback
             });

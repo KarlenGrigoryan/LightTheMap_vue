@@ -467,6 +467,9 @@
 </script>
 
 <style scoped>
+  .table-link {
+    width: 70%
+  }
   .listing-filter li {
     position: relative
   }

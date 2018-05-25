@@ -6,62 +6,65 @@
       <div class="modal-dialog new-modal animated zoomIn animated-3x" role="document">
         <div class="modal-content">
           <div class="modal-header d-block shadow-2dp no-pb">
-            <button type="button" class="close d-inline pull-right modal-close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">
-                      <i class="zmdi zmdi-close"></i>
-                    </span>
-            </button>
 
           </div>
           <div class="modal-body">
             <div class="tab-content">
-
-              <h3 class="no-m ms-site-title">We are already in love with you!!!</h3>
-              <p class="lead lead-sm">Don't you love your friends who help you with your project?
-                You are one such friend to us. Our aim is to list all the awesome mentoring initiatives in India on this website.
-                Thank you for helping us reach our goal.</p>
-              <hr/>
-
-              <h5>#3 ways in which you can help us list your initiative</h5><br/>
-
-              <table class="table">
-                <tbody>
-                <tr>
-                  <td><i class="mr-2 fa fa-instagram"></i></td>
-                  <td><span>Tag @lightthemap in you instagram post</span><br>
-                    <p class="modal-text-color">Tag @lightthemap in one of your instagram posts showing the great
-                      work you or your team is doing and
-                      we will get in touch</p></td>
-                </tr>
-                <tr>
-                  <td><i class="mr-2 fa fa-envelope"></i></td>
-                  <td><span>Say hello to us at lightthemap@gmail.com</span><br>
-                    <p class="modal-text-color">Drop us a hello at this email id: lightthemap@gmail.com with a
-                      little detail about the initiative you want to list and we will follow up with you</p></td>
-                </tr>
-
-                </tbody>
-              </table>
-
-              <div class="form-group is-empty my-class-form">
-
-                <div class="input-group">
-                  <span class="input-group-addon modal-icon"><i class="mr-1 zmdi zmdi-square-right "></i></span>
-                  <input type="text" id="addon1" class="form-control" placeholder="Leave your email with us" v-model="email">
-                  <span class="input-group-btn">
-                    <button class="btn btn-raised btn-default" type="button" @click="submitEmail">Submit</button>
-                  </span>
-                </div>
-                <label class="control-label modal-text-color" for="addon1">Submit your email above and we will get back to you and
-                  learn all about your initiative. We will only use your email for our private conversation. No
-                  cheating!</label>
-              </div>
-              <div class="alert alert-success alert-dismissible fade show" role="alert" data-dismiss="alert" v-if="modalAlert">
-                <strong>Success! </strong>{{ modalMessage }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+              <header>
+                <button type="button" class="close d-inline pull-right modal-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                      <i class="zmdi zmdi-close"></i>
+                    </span>
                 </button>
-              </div>
+                <h3 class="no-m ms-site-title">We are already in love with you!!!</h3>
+                <p class="lead lead-sm">Don't you love your friends who help you with your project?
+                  You are one such friend to us. Our aim is to list all the awesome mentoring initiatives in India on this website.
+                  Thank you for helping us reach our goal.</p>
+              </header>
+              <section>
+                <p class="section-title">#3 ways in which you can help us list your initiative</p><br/>
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td><i class="mr-2 fa fa-instagram"></i></td>
+                      <td><span>Tag @lightthemap in you instagram post</span><br>
+                        <p class="modal-text-color">Tag @lightthemap in one of your instagram posts showing the great
+                          work you or your team is doing and
+                          we will get in touch</p></td>
+                    </tr>
+                    <tr>
+                      <td><i class="mr-2 fa fa-envelope"></i></td>
+                      <td><span>Say hello to us at lightthemap@gmail.com</span><br>
+                        <p class="modal-text-color">Drop us a hello at this email id: lightthemap@gmail.com with a
+                          little detail about the initiative you want to list and we will follow up with you</p></td>
+                    </tr>
+                    <tr>
+                      <td class="td-footer">
+                        <span class="input-group-addon modal-icon"><i class="mr-1 zmdi zmdi-square-right "></i></span>
+                      </td>
+                      <td class="td-footer-submit">
+                        <div class=" is-empty my-class-form">
+                          <input type="text" id="addon1" class="form-control" placeholder="Leave your email with us" v-model="email">
+                          <label class="control-label modal-text-color" for="addon1">Submit your email above and we will get back to you and
+                            learn all about your initiative. We will only use your email for our private conversation. No
+                            cheating!</label>
+                        </div>
+                        <div>
+                          <button class="btn btn-raised btn-default submit-button-footer" type="button" @click="submitEmail">Submit</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <footer>
+                <div class="alert alert-success alert-dismissible fade show" role="alert" data-dismiss="alert" v-if="modalAlert">
+                  <strong>Success! </strong>{{ modalMessage }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </footer>
             </div>
           </div>
         </div>

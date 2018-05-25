@@ -115,7 +115,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body popup">
               <div id="map" style="height: 400px; width: 100%; position: relative"></div>
             </div>
             <div class="modal-footer">

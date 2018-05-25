@@ -2988,6 +2988,10 @@ hr.on-light {
     border-color: #fff
 }
 
+.line-white{
+    width: 90%;
+}
+
 .imgborder {
     padding: 5px;
     border: solid 1px #ddd
@@ -12577,6 +12581,7 @@ body.lb-disable-scrolling {
     .modal-sm {
         max-width: 300px
     }
+
 }
 
 @media (min-width: 992px) {
@@ -13016,6 +13021,10 @@ body.lb-disable-scrolling {
     .list-hero {
         font-size: 1.5rem;
         font-weight: 400
+    }
+
+    div.li-bottom{
+        display: inline-block;
     }
 }
 
@@ -15785,8 +15794,18 @@ td.margin-top-table a{
 
 .table-link{
     color: inherit;
+  width: 100%;
 }
 
+.filter-title{
+  flex: 1;
+  text-align: left;
+}
+
+.listing-filter:hover{
+  cursor: pointer;
+  background: #fbfbfb;
+}
 .modal-close span i{
     font-size: 38px;
     margin: 0 10px 0 0 !important;
@@ -15831,11 +15850,15 @@ td.margin-top-table a{
     list-style: none;
     padding: 7px 0 0 7px;
     margin-bottom: 0;
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+
 }
 
-.listing-filter li{
-    display: inline-block;
-    padding: 7px 50px 7px 7px;
+ul.listing-filter li{
+  margin: 7px 0px 7px 7px;
+  display: inline-block;
 }
 .listing-filter li img{
     vertical-align: bottom;
@@ -15853,6 +15876,13 @@ td.margin-top-table a{
 .right-smile{
   border: 1px solid #eee;
   width: 70px;
+  height: 30px;
+}
+.mail-map, .li-top, .li-bottom{
+  display: flex;
+  display: -webkit-flex;
+  flex: 1;
+  justify-content: flex-end;
 }
 .bottom-right-buttons{
   display: inline-flex;

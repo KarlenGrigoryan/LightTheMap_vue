@@ -64,46 +64,37 @@
                 <div class="card mb-1">
                   <ul class="listing-filter">
                     <li><img src="../assets/img/demo/products/m1.png" alt=""></li>
-                    <li class="line-white">
-                      <h4 class="filter-title">{{ initiative.name }}</h4>
-                      <h6 class="filter-content">Teach guitar to the local kids in {{ initiative.address.city }}</h6>
-                      <span href="#" class="btn btn-raised btn-xs btn-default ops-btn" v-for="(tag, key) in initiative.tags" :key="key">{{ tag.name }}</span>
-                    </li>
-                    <li class="top">
-                      <div>
-                        <table class="">
-                          <tr>
-                            <td>
-                              <p class="right-smile">
-                                <span class="number-ch">
-                                  <i class="ion-happy-outline"></i>{{ initiative.students }} <span v-if="!initiative.students">0</span>
-                                </span>
-                              </p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div aria-labelledby="dropdownMenuButton" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <router-link to="#" class="btn btn-raised btn-xs btn-default same-btn" >
-                                  <i class="mr-2 fa fa-envelope-o"></i>MAIL
-                                </router-link>
-                                <div class="dropdown-menu">
-                                  <span class="dropdown-item">{{ initiative.social_networks.email }}</span>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <div @click="openMap(initiative.address)">
-                                <router-link to="#" class="btn btn-raised btn-xs btn-default same-btn" data-toggle="modal" data-target="#mapModal">
-                                  <i class="mr-2 fa fa-map-marker"></i>MAP
-                                </router-link>
-                              </div>
-                            </td>
-                          </tr>
-                        </table>
-                        <!--<div class="bottom-right-buttons">-->
-                          <!---->
-                        <!--</div>-->
+                    <li class="line-white top" >
+                      <div class="li-top">
+                        <h4 class="filter-title">{{ initiative.name }}</h4>
+                        <p class="right-smile">
+                          <span class="number-ch">
+                            <i class="ion-happy-outline"></i>{{ initiative.students }} <span v-if="!initiative.students">0</span>
+                          </span>
+                        </p>
+                      </div>
+                      <div class="filter-title">
+                        <h6 class="filter-content">Teach guitar to the local kids in {{ initiative.address.city }}</h6>
+                      </div>
+                      <div class="li-bottom">
+                        <div>
+                          <span href="#" class="btn btn-raised btn-xs btn-default ops-btn" v-for="(tag, key) in initiative.tags" :key="key">{{ tag.name }}</span>
+                        </div>
+                        <div class="mail-map">
+                          <div aria-labelledby="dropdownMenuButton" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <router-link to="#" class="btn btn-raised btn-xs btn-default same-btn" >
+                              <i class="mr-2 fa fa-envelope-o"></i>MAIL
+                            </router-link>
+                            <div class="dropdown-menu">
+                              <span class="dropdown-item">{{ initiative.social_networks.email }}</span>
+                            </div>
+                          </div>
+                          <div @click="openMap(initiative.address)">
+                            <router-link to="#" class="btn btn-raised btn-xs btn-default same-btn" data-toggle="modal" data-target="#mapModal">
+                              <i class="mr-2 fa fa-map-marker"></i>MAP
+                            </router-link>
+                          </div>
+                        </div>
                       </div>
                     </li>
                   </ul>

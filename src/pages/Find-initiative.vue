@@ -42,16 +42,15 @@
                 </form>
                 <form class="form-horizontal">
                   <h4>Sort by</h4>
-                  <select id="SortSelect" class="form-control selectpicker">
-                    <option value="random">Popular</option>
-                    <option value="date:asc">Release ASC</option>
-                    <option value="date:desc">Release DESC</option>
+                  <select id="SortSelect" class="form-control selectpicker" v-model="sort" @change="chooseSort(sort)">
+                    <option value="0">Popular</option>
+                    <option value="-1">Posted On - Old to New </option>
+                    <option value="1">Posted on - New to Old </option>
                   </select>
                 </form>
               </div>
             </div>
           </div>
-
           <div class="col-lg-9">
             <h1 class="right-line mb-4">{{ toTitleCase(value) }}</h1>
             <div class="loader" v-if="loader">
@@ -135,6 +134,8 @@
             loader: false,
             value: '',
             cityName: '',
+            sort: '',
+            sortVal: 0,
             initiatives: [],
             tagsList: [
               {
@@ -187,7 +188,11 @@
             // Check if search value is not empty
             if(this.value) {
               let body = {
-                value: this.toTitleCase(this.value)
+                value: this.toTitleCase(this.value),
+                tags: this.tags,
+                sort: {
+                  release: this.sortVal
+                }
               };
               // Get initiatives by searched value
                this.$http.post('http://www.localhost:8000/api/find-initiative', body).then(response => {
@@ -213,7 +218,10 @@
           }
           let body = {
             value: this.toTitleCase(this.value),
-            tags: this.tags
+            tags: this.tags,
+            sort: {
+              release: this.sortVal
+            }
           };
 
           //Filter initiatives
@@ -223,6 +231,27 @@
             _this.initiatives = response.body.data;
           }, response => {// error callback
           });
+        },
+        chooseSort(sortVal) {
+          console.log(+sortVal);
+          let _this = this;
+          this.loader = true;
+          this.sortVal = +sortVal;
+          let body = {
+            value: this.toTitleCase(this.value),
+            tags: this.tags,
+            sort: {
+              release: +sortVal
+            }
+          };
+          this.$http.post('http://www.localhost:8000/api/find-initiative', body).then(response => {
+            // Get body data
+            console.log(response)
+            _this.loader = false;
+            _this.initiatives = response.body.data;
+          }, response => {// error callback
+          });
+
         },
         getInitiatives(city) {
           let _this = this;
@@ -469,6 +498,11 @@
 <style scoped>
   .table-link {
     width: 70%
+  }
+  @media (max-width: 768px) {
+    .table-link {
+      width: 100%
+    }
   }
   .listing-filter li {
     position: relative

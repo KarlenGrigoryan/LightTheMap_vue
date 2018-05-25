@@ -12,10 +12,10 @@
       </div>
       <div class="header-right">
         <div class="ms-footbar-social">
-          <a href="https://facebook.com" class="btn-circle btn-facebook">
+          <a href="https://facebook.com" target="_blank" class="btn-circle btn-facebook">
             <i class="zmdi zmdi-facebook"></i>
           </a>
-          <a href="https://www.instagram.com/" class="btn-circle btn-instagram">
+          <a href="https://www.instagram.com/lightthemap/" target="_blank" class="btn-circle btn-instagram">
             <i class="zmdi zmdi-instagram"></i>
           </a>
         </div>

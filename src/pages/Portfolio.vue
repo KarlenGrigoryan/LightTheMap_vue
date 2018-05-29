@@ -11,7 +11,7 @@
             <br>
               <div class="card mb-1">
                   <ul class="listing-filter portfolio">
-                      <li v-if="initiative.medias"><img :src="initiative.medias.profle" alt=""></li>
+                      <li v-if="initiative.medias"><img :src="initiative.medias.profle" alt="" width="80"></li>
                       <li>
                           <h4 class="filter-title">{{ initiative.name }}</h4>
                           <h6 class="filter-content" v-if="initiative.address">Teach guitar to the local kids in {{ initiative.address.city }}</h6>
@@ -138,6 +138,7 @@
     </div>
 </template>
 <script>
+import config from '../config'
 export default {
     data() {
         return {
@@ -148,7 +149,7 @@ export default {
     created() {
         let _this = this;
         this.loader = true;
-        this.$http.get(`http://www.localhost:8000/api/get-initiative-details?id=${this.$route.params.id}`).then(response => {
+        this.$http.get(`${config.server.api}/api/get-initiative-details?id=${this.$route.params.id}`).then(response => {
         // get body data
         console.log(response)
             setTimeout(() => {

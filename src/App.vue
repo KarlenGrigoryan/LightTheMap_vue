@@ -33,4 +33,10 @@
   /*-moz-osx-font-smoothing: grayscale;*/
   /*color: #2c3e50;*/
 }
+.card-body .bootstrap-select:after {
+    display: none
+}
+#ms-account-modal-2 .form-group{
+  margin: 0;
+}
 </style>

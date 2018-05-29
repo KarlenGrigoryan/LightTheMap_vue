@@ -143,7 +143,7 @@
                 <i class="zmdi zmdi-star"></i> INITIATIVES BY CITY</h4>
             </div>
             <div class="list-group">
-              <router-link :to="{ name: 'FindInitiative', query: { city: `${city._id}` } }" class="list-group-item list-group-item-action withripple" v-for="(city, key, index) in popularCities" :key="key"> {{ city._id }} </router-link>
+              <a :href="`/find-initiative?city=${city._id}`" class="list-group-item list-group-item-action withripple" v-for="(city, key, index) in popularCities" :key="key"> {{ city._id }} </a>
             </div>
           </div>
         </div>
@@ -153,6 +153,7 @@
 </template>
 
 <script>
+import config from '../config'
 
     export default {
         name: "home",
@@ -357,7 +358,7 @@
             origin: new google.maps.Point(0,0), // origin
             anchor: new google.maps.Point(0, 0) // anchor
           };
-          this.$http.get('http://www.localhost:8000/api/get-cities').then(response => {
+          this.$http.get(`${config.server.api}/api/get-cities`).then(response => {
             // get body data
             setCities(response.body.data);
           }, response => {
@@ -386,19 +387,16 @@
         created() {
           let _this = this;
           // Get total cities count
-          this.$http.get('http://www.localhost:8000/api/get-cities-count').then(response => {
+          this.$http.get(`${config.server.api}/api/get-cities-count`).then(response => {
                 // get body data
                 _this.citiesCount = response.body.data.count;
-              }, response => {
-                // error callback
+              }, response => { // error callback
               });
           // Get popular cities
-          this.$http.get('http://www.localhost:8000/api/get-popular-cities').then(response => {
+          this.$http.get(`${config.server.api}/api/get-popular-cities`).then(response => {
                 // get body data
                 _this.popularCities = response.body.data;
-                console.log(response);
-              }, response => {
-                // error callback
+              }, response => { // error callback
               });
         },
         methods: {
@@ -409,14 +407,13 @@
               email: this.email
             }
             console.log(body)
-            this.$http.post('http://www.localhost:8000/api/add-initiative', body).then(response => {
+            this.$http.post(`${config.server.api}/api/add-initiative`, body).then(response => {
                 // get body data
                 if(response.status === 200) {
                   _this.modalAlert = true;
                   _this.modalMessage = response.body.data.message
                 }
-              }, response => {
-                // error callback
+              }, response => { // error callback
               });
           }
         }
@@ -427,4 +424,5 @@
   hr {
     margin: 0 0 25px 0;
   }
+
 </style>

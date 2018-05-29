@@ -4,7 +4,7 @@
         <div class="container">
           <div class="text-center">
             <h1 class="no-m ms-site-title color-white center-block ms-site-title-lg mt-2">Find Initiative</h1>
-            <form class=" mt-4 mw-800 center-block">
+            <form class=" mt-4 mw-800 center-block" v-on:submit.prevent="search">
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group label-floating input-group ">
@@ -13,7 +13,7 @@
                     <input type="text" id="ms-class-zip" class="form-control color-white" v-model="value"> </div>
                 </div>
               </div>
-              <button type="button" class="btn btn-raised btn-block" @click="search">
+              <button type="submit" class="btn btn-raised btn-block" >
                 <i class="zmdi zmdi-search"></i> Search</button>
             </form>
           </div>
@@ -62,7 +62,7 @@
               <router-link :to="{ name: 'Portfolio', params: {id: initiative._id}}" class="table-link" v-for="(initiative, key) in initiatives" :key="key">
                 <div class="card mb-1">
                   <ul class="listing-filter">
-                    <li><img src="../assets/img/demo/products/m1.png" alt=""></li>
+                    <li><img :src="initiative.medias.profle" alt="" width="80"></li>
                     <li class="line-white top" >
                       <div class="li-top">
                         <h4 class="filter-title">{{ initiative.name }}</h4>
@@ -127,6 +127,8 @@
 </template>
 
 <script>
+import config from '../config'
+
     export default {
         name: "find-initiative",
         data() {
@@ -152,7 +154,7 @@
               },
               {
                   "name": "Guiter",
-                  "id": 1
+                  "id": 4
               },
               {
                   "name": "Spoken English",
@@ -178,7 +180,21 @@
             this.value = this.$route.query.city
             this.getInitiatives(this.$route.query.city);
           }else {
-            this.getInitiatives();
+             if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position => {
+                  this.$http.get(`${config.server.api}/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&sensor=false?key=AIzaSyBVsiPF2PDAmQ7AUqOJrQr82_9dMjVAdsc`).then(coordinates => {
+                    function findPosName(value) {
+                      return value.types["0"] === 'locality';
+                    }
+                    var currentPost = JSON.parse(coordinates.bodyText).results["0"].address_components.filter(findPosName)
+                    this.value = currentPost["0"].long_name
+                    this.getInitiatives(currentPost["0"].long_name);
+                    
+                  })
+                }))
+             }else {
+                this.getInitiatives();
+             }
           }
         },
       methods: {
@@ -195,7 +211,7 @@
                 }
               };
               // Get initiatives by searched value
-               this.$http.post('http://www.localhost:8000/api/find-initiative', body).then(response => {
+               this.$http.post(`${config.server.api}/api/find-initiative`, body).then(response => {
                 // // get body data
                 _this.loader = false;
                 _this.initiatives = response.body.data;
@@ -206,31 +222,50 @@
             }
         },
         chooseTag(tag) {
+          console.log(tag.id)
           let _this = this;
           this.loader = true;
           let index = this.tags.indexOf(tag);
 
-          // Check if tag is selected
-          if (index > -1) {
-            this.tags.splice(index, 1);
+          if(tag.id === 1) {
+            this.tags = [];
+            let body = {
+              value: this.toTitleCase(this.value),
+              tags: this.tags,              
+              sort: {
+                release: this.sortVal
+              }
+            };
+            //Filter initiatives
+            this.$http.post(`${config.server.api}/api/find-initiative`, body).then(response => {
+              // Get body data
+              _this.loader = false
+              _this.initiatives = response.body.data;
+            }, response => {// error callback
+            });
           }else {
-            this.tags.push(tag);
-          }
-          let body = {
-            value: this.toTitleCase(this.value),
-            tags: this.tags,
-            sort: {
-              release: this.sortVal
-            }
-          };
+             // Check if tag is selected
+              if (index > -1) {
+                this.tags.splice(index, 1);
+              }else {
+                this.tags.push(tag);
+              }
+              let body = {
+                value: this.toTitleCase(this.value),
+                tags: this.tags,
+                sort: {
+                  release: this.sortVal
+                }
+              };
 
-          //Filter initiatives
-          this.$http.post('http://www.localhost:8000/api/find-initiative', body).then(response => {
-            // Get body data
-            _this.loader = false
-            _this.initiatives = response.body.data;
-          }, response => {// error callback
-          });
+              //Filter initiatives
+              this.$http.post(`${config.server.api}/api/find-initiative`, body).then(response => {
+                // Get body data
+                _this.loader = false
+                _this.initiatives = response.body.data;
+              }, response => {// error callback
+              });
+          }
         },
         chooseSort(sortVal) {
           console.log(+sortVal);
@@ -244,7 +279,7 @@
               release: +sortVal
             }
           };
-          this.$http.post('http://www.localhost:8000/api/find-initiative', body).then(response => {
+          this.$http.post(`${config.server.api}/find-initiative`, body).then(response => {
             // Get body data
             console.log(response)
             _this.loader = false;
@@ -262,14 +297,14 @@
               value: this.toTitleCase(city)
             };
             // Get initiatives by city
-            this.$http.post('http://www.localhost:8000/api/find-initiative', body).then(response => {
+            this.$http.post(`${config.server.api}/api/find-initiative`, body).then(response => {
               // get body data
               _this.loader = false
               _this.initiatives = response.body.data;
             }, response => {// error callback
             });
           }else {
-            this.$http.post('http://www.localhost:8000/api/find-initiative').then(response => {
+            this.$http.post(`${config.server.api}/api/find-initiative`).then(response => {
               // get body data
               _this.loader = false
               _this.initiatives = response.body.data;
@@ -279,7 +314,7 @@
         },
         getTags() {
           let _this = this;
-          this.$http.get('http://www.localhost:8000/api/get-tags').then(response => {
+          this.$http.get(`${config.server.api}/api/get-tags`).then(response => {
             // get body data
             _this.tagsList = response.body.data[0].tags;
             console.log(_this.tags)
@@ -523,7 +558,7 @@
     stroke-linecap: round;
     stroke: #33a9ff;
   }
-
+  
   @keyframes rotate {
     100% {
       transform: rotate(360deg);

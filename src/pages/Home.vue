@@ -169,19 +169,25 @@ import config from '../config'
         mounted () {
             let map = new google.maps.Map(document.getElementById('map'), {
               zoom: 4,
-              center: new google.maps.LatLng(28.644800, 77.216721),
+              center: new google.maps.LatLng(20.644800, 84.216721),
               mapTypeId: google.maps.MapTypeId.ROADMAP,
+              disableDefaultUI: true,
+              draggable: false,
+              scaleControl: false,
+              scrollwheel: false,
               styles: [
                 {
                   "featureType": "water",
                   "elementType": "geometry",
                   "stylers": [
                     {
-                      "color": "#e9e9e9"
+                      "color": "grey"
                     },
                     {
                       "lightness": 17
-                    }
+                    },
+                    
+                    // { "visibility": "off" }
                   ]
                 },
                 {
@@ -193,7 +199,7 @@ import config from '../config'
                     },
                     {
                       "lightness": 20
-                    }
+                    },
                   ]
                 },
                 {
@@ -205,7 +211,8 @@ import config from '../config'
                     },
                     {
                       "lightness": 17
-                    }
+                    },
+                    { "visibility": "off" }
                   ]
                 },
                 {
@@ -220,7 +227,8 @@ import config from '../config'
                     },
                     {
                       "weight": 0.2
-                    }
+                    },
+                    { "visibility": "off" }
                   ]
                 },
                 {
@@ -328,7 +336,8 @@ import config from '../config'
                     },
                     {
                       "lightness": 20
-                    }
+                    },
+
                   ]
                 },
                 {
@@ -352,11 +361,13 @@ import config from '../config'
           let infowindow = new google.maps.InfoWindow();
 
           let marker;
+
+          let _this = this;
           let icon = {
             url: "/static/img/circle-xxl.png", // url
             scaledSize: new google.maps.Size(20, 20), // scaled size
             origin: new google.maps.Point(0,0), // origin
-            anchor: new google.maps.Point(0, 0) // anchor
+            anchor: new google.maps.Point(0, 0), // anchor
           };
           this.$http.get(`${config.server.api}/api/get-cities`).then(response => {
             // get body data
@@ -377,6 +388,7 @@ import config from '../config'
               });
               google.maps.event.addListener(marker, 'click', ((marker, i) => {
                 return () => {
+                  _this.redirectPage(name);
                   infowindow.setContent(name);
                   infowindow.open(map, marker);
                 }
@@ -400,6 +412,12 @@ import config from '../config'
               });
         },
         methods: {
+
+          // Redirect Page Current City
+          redirectPage (city) {
+            this.$router.replace('/find-initiative?city=' + city)
+          },
+
           // Add initiative
           submitEmail() {
             let _this = this;

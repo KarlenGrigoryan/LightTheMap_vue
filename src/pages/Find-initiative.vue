@@ -33,8 +33,8 @@
                 <form class="form-horizontal" id="Filters">
                   <fieldset>
                     <div class="form-group no-mt">
-                      <div class="checkbox" v-for="tag in tagsList" >
-                        <label > <input type="checkbox" :value="`.${tag.id}`" @click="chooseTag(tag)"> {{ tag.name }} </label>
+                      <div class="checkbox" v-for="(tag,index) in tagsList" v-bind:key="index">
+                        <label > <input type="checkbox"  :value="`.${tag.id}`" @click="chooseTag(tag)"> {{ tag.name }} </label>
                       </div>
                     </div>
                   </fieldset>

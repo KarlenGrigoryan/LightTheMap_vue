@@ -23,7 +23,7 @@
 
               <div class="panel-menu " id="collapseMenu-1">
 
-                  <a href="#" class="btn btn-xlg btn-raised btn-primary btn-raised btn-block media-show">
+                  <a href="https://www.google.com/maps" target="_blank" class="btn btn-xlg btn-raised btn-primary btn-raised btn-block media-show">
                       <i class="mr-2 fa fa-globe"></i>
                       LOCATE US
                       <div class="col-md-2"></div>
@@ -69,7 +69,7 @@
 
                 <div class="panel-menu" id="collapseMenu">
 
-                    <a href="#" class="btn btn-xlg btn-raised btn-primary btn-raised btn-block media-show">
+                    <a href="https://www.google.com/maps" target="_blank"  class="btn btn-xlg btn-raised btn-primary btn-raised btn-block media-show">
                         <i class="mr-2 fa fa-globe"></i>
                         LOCATE US
                         <div class="col-md-2"></div>
@@ -99,7 +99,12 @@
                   <!-- ms-collapse-nav -->
                 </div>
 
-                <a href="#" class="btn btn-xlg btn-raised btn-primary btn-raised btn-block media-hide" data-toggle="modal" data-target="#locateUsModal" @click="openModal">
+                <!-- <a href="#" class="btn btn-xlg btn-raised btn-primary btn-raised btn-block media-hide" data-toggle="modal" data-target="#locateUsModal" @click="openModal">
+                  <i class="mr-2 fa fa-globe"></i>
+                  LOCATE US
+                  <div class="col-md-2"></div>
+                </a> -->
+                <a href="https://www.google.com/maps" target="_blank" class="btn btn-xlg btn-raised btn-primary btn-raised btn-block media-hide">
                   <i class="mr-2 fa fa-globe"></i>
                   LOCATE US
                   <div class="col-md-2"></div>

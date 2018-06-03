@@ -10,7 +10,7 @@
                   <div class="form-group label-floating input-group ">
                     <label class="control-label color-white" for="ms-class-zip">
                       <i class="zmdi zmdi-pin mr-1"></i> City / Zipcode...</label>
-                    <input type="text" id="ms-class-zip" class="form-control color-white" v-model="value"> </div>
+                    <input type="text" id="ms-class-zip"  class="form-control color-white" v-model="value" placeholder=""> </div>
                 </div>
               </div>
               <button type="submit" class="btn btn-raised btn-block" >
@@ -173,31 +173,65 @@ import config from '../config'
           }
         },
         mounted() {
-          // $('[data-toggle="tooltip"]').tooltip()
+          let _this = this;
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('ms-class-zip');
+        var searchBox = new google.maps.places.SearchBox(input);
+
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            console.log(place.geometry.location.lat())
+            console.log(place.geometry.location.lng())
+            
+            _this.getCity(place.geometry.location.lat(), place.geometry.location.lng())
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+        });
         },
         created() {
           if(this.$route.query.city) {
             this.value = this.$route.query.city
             this.getInitiatives(this.$route.query.city);
           }else {
-             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((position => {
-                  this.$http.get(`${config.server.api}/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&sensor=false?key=AIzaSyBVsiPF2PDAmQ7AUqOJrQr82_9dMjVAdsc`).then(coordinates => {
-                    function findPosName(value) {
-                      return value.types["0"] === 'locality';
-                    }
-                    var currentPost = JSON.parse(coordinates.bodyText).results["0"].address_components.filter(findPosName)
-                    this.value = currentPost["0"].long_name
-                    this.getInitiatives(currentPost["0"].long_name);
-                    
-                  })
-                }))
-             }else {
-                this.getInitiatives();
-             }
+            this.getInitiatives();
           }
         },
       methods: {
+        getCity(lat, lng) {
+          console.log('workkkk')
+          this.$http.get('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=false?key=AIzaSyBVsiPF2PDAmQ7AUqOJrQr82_9dMjVAdsc', ).then(response => {
+                // Get body data
+               console.log(response)
+              function findPosName(value) {
+                      return value.types["0"] === 'locality';
+                    }
+                    var currentPost = response.body.results["0"].address_components.filter(findPosName)
+                    this.value = currentPost["0"].long_name
+                    console.log(currentPost["0"].long_name)
+                    this.getInitiatives(currentPost["0"].long_name);
+              }, response => {// error callback
+              
+              });
+        },
         search() {
             let _this = this;
             this.loader = true;
@@ -332,6 +366,10 @@ import config from '../config'
           var uluru = {lat: Number(mapDetails.coordinates.lat),lng: Number(mapDetails.coordinates.lng)};
             var map = new google.maps.Map(document.getElementById('map'), {
               zoom: 4,
+              disableDefaultUI: true,
+              draggable: false,
+              scaleControl: false,
+              scrollwheel: false,
               center: uluru,
               styles: [
                 {

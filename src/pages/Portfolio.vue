@@ -23,7 +23,7 @@
 
               <div class="panel-menu " id="collapseMenu-1">
 
-                  <a href="https://www.google.com/maps" target="_blank" class="btn btn-xlg btn-raised btn-primary btn-raised btn-block media-show">
+                  <a :href="`https://www.google.com/maps/search/${fullAdrress}/@${initiative.address.coordinates.lat},${initiative.address.coordinates.lng}`" target="_blank" class="btn btn-xlg btn-raised btn-primary btn-raised btn-block media-show">
                       <i class="mr-2 fa fa-globe"></i>
                       LOCATE US
                       <div class="col-md-2"></div>
@@ -69,7 +69,7 @@
 
                 <div class="panel-menu" id="collapseMenu">
 
-                    <a href="https://www.google.com/maps" target="_blank"  class="btn btn-xlg btn-raised btn-primary btn-raised btn-block media-show">
+                    <a :href="`https://www.google.com/maps/search/${fullAdrress}/@${initiative.address.coordinates.lat},${initiative.address.coordinates.lng}`" target="_blank"  class="btn btn-xlg btn-raised btn-primary btn-raised btn-block media-show">
                         <i class="mr-2 fa fa-globe"></i>
                         LOCATE US
                         <div class="col-md-2"></div>
@@ -104,7 +104,7 @@
                   LOCATE US
                   <div class="col-md-2"></div>
                 </a> -->
-                <a href="https://www.google.com/maps" target="_blank" class="btn btn-xlg btn-raised btn-primary btn-raised btn-block media-hide">
+                <a :href="`https://www.google.com/maps/search/${fullAdrress}/@${initiative.address.coordinates.lat},${initiative.address.coordinates.lng}`" target="_blank" class="btn btn-xlg btn-raised btn-primary btn-raised btn-block media-hide">
                   <i class="mr-2 fa fa-globe"></i>
                   LOCATE US
                   <div class="col-md-2"></div>
@@ -148,7 +148,8 @@ export default {
     data() {
         return {
             loader: true,
-            initiative: {}
+            initiative: {},
+            fullAdrress: ''
         }
     },
     created() {
@@ -159,6 +160,7 @@ export default {
         console.log(response)
             setTimeout(() => {
                 _this.initiative = response.body.data[0];
+                _this.fullAdrress = `${ _this.initiative.address.cross } Cross, ${ _this.initiative.address.district } District,${ _this.initiative.address.city }`;
                 _this.loader = false;
             }, 1000)
         }, response => {// error callback

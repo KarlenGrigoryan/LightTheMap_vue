@@ -228,7 +228,7 @@ import config from '../config'
       methods: {
         getCity(lat, lng) {
           console.log('workkkk')
-          this.$http.get('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=false?key=AIzaSyBVsiPF2PDAmQ7AUqOJrQr82_9dMjVAdsc', ).then(response => {
+          this.$http.get('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=false?key=AIzaSyBVsiPF2PDAmQ7AUqOJrQr82_9dMjVAdsc?project=My Project 21800', ).then(response => {
                 // Get body data
                console.log(response)
               function findPosName(value) {

@@ -7,7 +7,7 @@
             <form class=" mt-4 mw-800 center-block" v-on:submit.prevent="search">
               <div class="row">
                 <div class="col-lg-12">
-                  <div class="form-group label-floating input-group ">
+                  <div class="form-group label-floating input-group">
                     <label class="control-label color-white" for="ms-class-zip">
                       <i class="zmdi zmdi-pin mr-1"></i> City / Zipcode...</label>
                     <input type="text" id="ms-class-zip"  class="form-control color-white" v-model="value" placeholder=""> </div>
@@ -33,8 +33,11 @@
                 <form class="form-horizontal" id="Filters">
                   <fieldset>
                     <div class="form-group no-mt">
-                      <div class="checkbox" v-for="(tag,index) in tagsList" v-bind:key="index">
-                        <label > <input type="checkbox"  :value="`.${tag.id}`" @click="chooseTag(tag)"> {{ tag.name }} </label>
+                      <div class="checkbox md-checkbox" v-for="(tag,index) in tagsList" v-bind:key="index">
+                        <input type="checkbox"  :value="`check_${tag.id}`" :id="`check_${tag.id}`" @click="chooseTag(tag)"> 
+                        <label :for="`check_${tag.id}`"> 
+                          {{ tag.name }} 
+                        </label>
                       </div>
                     </div>
                   </fieldset>

@@ -92,7 +92,7 @@
               <a href="#"
                  class="btn btn-raised btn-xlg btn-default"
                  data-toggle="modal" data-target="#ms-account-modal-2"> Add Initiative</a>
-              <a href="/find-initiative" class="btn btn-xlg new-color">Find Initiative</a>
+              <router-link to="/find-initiative" class="btn btn-xlg new-color">Find Initiative</router-link>
             </div>
           </div>
           <div class="col-lg-5 text-center hide-image-on-mobile">
@@ -143,7 +143,7 @@
                 <i class="zmdi zmdi-star"></i> INITIATIVES BY CITY</h4>
             </div>
             <div class="list-group">
-              <a :href="`/find-initiative?city=${city._id}`" class="list-group-item list-group-item-action withripple" v-for="(city, key, index) in popularCities" :key="key"> {{ city._id }} </a>
+              <router-link :to="`/find-initiative?city=${city._id}`" class="list-group-item list-group-item-action withripple" v-for="(city, key, index) in popularCities" :key="key"> {{ city._id }} </router-link>
             </div>
           </div>
         </div>

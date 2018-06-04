@@ -34,7 +34,7 @@
                   <fieldset>
                     <div class="form-group no-mt">
                       <div class="checkbox md-checkbox" v-for="(tag,index) in tagsList" v-bind:key="index">
-                        <input type="checkbox"  :value="`check_${tag.id}`" :id="`check_${tag.id}`" @click="chooseTag(tag)"> 
+                        <input type="checkbox"  :value="`check_${tag.id}`" :id="`check_${tag.id}`" @click="chooseTag(tag); tag.checked = !tag.checked" :checked="tag.checked"> 
                         <label :for="`check_${tag.id}`"> 
                           {{ tag.name }} 
                         </label>
@@ -145,31 +145,38 @@ import config from '../config'
             tagsList: [
               {
                   "name": "All",
-                  "id": 1
+                  "id": 1,
+                  "checked": false
               },
               {
                   "name": "Fine Arts",
-                  "id": 2
+                  "id": 2,
+                  "checked": false
               },
               {
                   "name": "Maths",
-                  "id": 3
+                  "id": 3,
+                  "checked": false
               },
               {
                   "name": "Guiter",
-                  "id": 4
+                  "id": 4,
+                  "checked": false
               },
               {
                   "name": "Spoken English",
-                  "id": 5
+                  "id": 5,
+                  "checked": false
               },
               {
                   "name": "Dance",
-                  "id": 6
+                  "id": 6,
+                  "checked": false
               },
               {
                   "name": "General Tutoring",
-                  "id": 7
+                  "id": 7,
+                  "checked": false
               }
             ],
             tags: []
@@ -259,13 +266,16 @@ import config from '../config'
             }
         },
         chooseTag(tag) {
-          console.log(tag.id)
+          // console.log(this.tagsList)
           let _this = this;
           this.loader = true;
           let index = this.tags.indexOf(tag);
 
           if(tag.id === 1) {
             this.tags = [];
+            for(var i = 1; i< this.tagsList.length; i++) {
+              this.tagsList[i].checked = false
+            }
             let body = {
               value: this.toTitleCase(this.value),
               tags: this.tags,              
@@ -574,6 +584,9 @@ import config from '../config'
 <style scoped>
   .table-link {
     width: 70%
+  }
+  .form-group .checkbox label {
+    margin-left: 5px;
   }
   @media (max-width: 768px) {
     .table-link {

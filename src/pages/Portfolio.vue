@@ -29,7 +29,7 @@
                       <div class="col-md-2"></div>
                   </a>
 
-                  <a href="#" class="btn btn-xlg btn-block btn-raised btn-primary btn-success media-show">
+                  <a :href="`https://mail.google.com/mail/?view=cm&fs=1&to=${initiative.social_networks.email}&su=initiative&body=message..`" target="_blank" class="btn btn-xlg btn-block btn-raised btn-primary btn-success media-show">
                       <i class="fa fa-envelope-o"></i>
                       EMAIL US
                       <div class="ripple-container"></div>
@@ -75,7 +75,7 @@
                         <div class="col-md-2"></div>
                     </a>
 
-                  <a href="#" class="btn btn-xlg btn-block btn-raised btn-primary btn-success">
+                  <a :href="`https://mail.google.com/mail/?view=cm&fs=1&to=${initiative.social_networks.email}&su=initiative&body=message..`" target="_blank" class="btn btn-xlg btn-block btn-raised btn-primary btn-success">
                     <i class="fa fa-envelope-o"></i>
                     EMAIL US
                     <div class="ripple-container"></div>

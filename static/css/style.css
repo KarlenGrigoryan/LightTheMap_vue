@@ -33,7 +33,7 @@
     visibility: hidden;
   }
   .md-checkbox input[type="checkbox"]:checked + label:before {
-    background: #337ab7;
+    background: #7b1fa2;
     border: none;
   }
   .md-checkbox input[type="checkbox"]:checked + label:after {

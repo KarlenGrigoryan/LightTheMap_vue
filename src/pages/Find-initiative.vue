@@ -83,16 +83,14 @@
                           <span href="#" class="btn btn-raised btn-xs btn-default ops-btn" v-for="(tag, key) in initiative.tags" :key="key">{{ tag.name }}</span>
                         </div>
                         <div class="mail-map">
-                          <div aria-labelledby="dropdownMenuButton" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <div @click="sendMail(initiative)">
                             <router-link to="#" class="btn btn-raised btn-xs btn-default same-btn" >
                               <i class="mr-2 fa fa-envelope-o"></i>MAIL
                             </router-link>
-                            <div class="dropdown-menu">
-                              <span class="dropdown-item">{{ initiative.social_networks.email }}</span>
-                            </div>
+                            
                           </div>
-                          <div @click="openMap(initiative.address)">
-                            <router-link to="#" class="btn btn-raised btn-xs btn-default same-btn" data-toggle="modal" data-target="#mapModal">
+                          <div @click="openMap(initiative)">
+                            <router-link to="#" class="btn btn-raised btn-xs btn-default same-btn">
                               <i class="mr-2 fa fa-map-marker"></i>MAP
                             </router-link>
                           </div>
@@ -107,25 +105,6 @@
         </div>
       </div>
       <!-- container -->
-      <!-- Modal -->
-      <div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="mapModalLabel">Location</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body popup">
-              <div id="map" style="height: 400px; width: 100%; position: relative"></div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
   </div>
 </template>
 
@@ -369,214 +348,15 @@ import config from '../config'
           });
         },
         openMap(mapDetails) {
-          let infowindow = new google.maps.InfoWindow();
-          let icon = {
-            url: "/static/img/circle-xxl.png", // url
-            scaledSize: new google.maps.Size(20, 20), // scaled size
-            origin: new google.maps.Point(0,0), // origin
-            anchor: new google.maps.Point(0, 0) // anchor
-          };
-          var uluru = {lat: Number(mapDetails.coordinates.lat),lng: Number(mapDetails.coordinates.lng)};
-            var map = new google.maps.Map(document.getElementById('map'), {
-              zoom: 4,
-              disableDefaultUI: true,
-              draggable: false,
-              scaleControl: false,
-              scrollwheel: false,
-              center: uluru,
-              styles: [
-                {
-                  "featureType": "water",
-                  "elementType": "geometry",
-                  "stylers": [
-                    {
-                      "color": "#e9e9e9"
-                    },
-                    {
-                      "lightness": 17
-                    }
-                  ]
-                },
-                {
-                  "featureType": "landscape",
-                  "elementType": "geometry",
-                  "stylers": [
-                    {
-                      "color": "#f5f5f5"
-                    },
-                    {
-                      "lightness": 20
-                    }
-                  ]
-                },
-                {
-                  "featureType": "road.highway",
-                  "elementType": "geometry.fill",
-                  "stylers": [
-                    {
-                      "color": "#ffffff"
-                    },
-                    {
-                      "lightness": 17
-                    }
-                  ]
-                },
-                {
-                  "featureType": "road.highway",
-                  "elementType": "geometry.stroke",
-                  "stylers": [
-                    {
-                      "color": "#ffffff"
-                    },
-                    {
-                      "lightness": 29
-                    },
-                    {
-                      "weight": 0.2
-                    }
-                  ]
-                },
-                {
-                  "featureType": "road.arterial",
-                  "elementType": "geometry",
-                  "stylers": [
-                    {
-                      "color": "#ffffff"
-                    },
-                    {
-                      "lightness": 18
-                    }
-                  ]
-                },
-                {
-                  "featureType": "road.local",
-                  "elementType": "geometry",
-                  "stylers": [
-                    {
-                      "color": "#ffffff"
-                    },
-                    {
-                      "lightness": 16
-                    }
-                  ]
-                },
-                {
-                  "featureType": "poi",
-                  "elementType": "geometry",
-                  "stylers": [
-                    {
-                      "color": "#f5f5f5"
-                    },
-                    {
-                      "lightness": 21
-                    }
-                  ]
-                },
-                {
-                  "featureType": "poi.park",
-                  "elementType": "geometry",
-                  "stylers": [
-                    {
-                      "color": "#dedede"
-                    },
-                    {
-                      "lightness": 21
-                    }
-                  ]
-                },
-                {
-                  "elementType": "labels.text.stroke",
-                  "stylers": [
-                    {
-                      "visibility": "on"
-                    },
-                    {
-                      "color": "#ffffff"
-                    },
-                    {
-                      "lightness": 16
-                    }
-                  ]
-                },
-                {
-                  "elementType": "labels.text.fill",
-                  "stylers": [
-                    {
-                      "saturation": 36
-                    },
-                    {
-                      "color": "#333333"
-                    },
-                    {
-                      "lightness": 40
-                    }
-                  ]
-                },
-                {
-                  "elementType": "labels.icon",
-                  "stylers": [
-                    {
-                      "visibility": "off"
-                    }
-                  ]
-                },
-                {
-                  "featureType": "transit",
-                  "elementType": "geometry",
-                  "stylers": [
-                    {
-                      "color": "#f2f2f2"
-                    },
-                    {
-                      "lightness": 19
-                    }
-                  ]
-                },
-                {
-                  "featureType": "administrative",
-                  "elementType": "geometry.fill",
-                  "stylers": [
-                    {
-                      "color": "#fefefe"
-                    },
-                    {
-                      "lightness": 20
-                    }
-                  ]
-                },
-                {
-                  "featureType": "administrative",
-                  "elementType": "geometry.stroke",
-                  "stylers": [
-                    {
-                      "color": "#fefefe"
-                    },
-                    {
-                      "lightness": 17
-                    },
-                    {
-                      "weight": 1.2
-                    }
-                  ]
-                }
-              ]
-            });
-            var marker = new google.maps.Marker({
-              position: uluru,
-              map: map,
-              icon: icon
-            });
-             google.maps.event.addListener(marker, 'click', ((marker) => {
-                return () => {
-                  infowindow.setContent(mapDetails.city);
-                  infowindow.open(map, marker);
-                }
-              })(marker));
+            let fullAdrress = `${ mapDetails.address.cross } Cross, ${ mapDetails.address.district } District,${ mapDetails.address.city }`;
+            window.open(`https://www.google.com/maps/search/${fullAdrress}/@${mapDetails.address.coordinates.lat},${mapDetails.address.coordinates.lng}`, '_blank')          
+        },
+        sendMail(initiative) {
+            window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${initiative.social_networks.email}&su=initiative&body=message..`, '_blank')
         },
         toTitleCase(str){
           return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
         }
-
       }
     }
 </script>

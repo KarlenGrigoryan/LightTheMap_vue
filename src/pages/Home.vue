@@ -442,5 +442,13 @@ import config from '../config'
   hr {
     margin: 0 0 25px 0;
   }
+  @media(max-width: 768px) {
+    .tab-content section .table {
+      margin: 0;
+    }
+    .modal-body section {
+      padding: 0
+    }
+  } 
 
 </style>

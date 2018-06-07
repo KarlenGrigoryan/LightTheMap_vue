@@ -157,7 +157,6 @@ export default {
         this.loader = true;
         this.$http.get(`${config.server.api}/api/get-initiative-details?id=${this.$route.params.id}`).then(response => {
         // get body data
-        console.log(response)
             setTimeout(() => {
                 _this.initiative = response.body.data[0];
                 _this.fullAdrress = `${ _this.initiative.address.cross } Cross, ${ _this.initiative.address.district } District,${ _this.initiative.address.city }`;

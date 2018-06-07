@@ -424,7 +424,6 @@ import config from '../config'
             let body = {
               email: this.email
             }
-            console.log(body)
             this.$http.post(`${config.server.api}/api/add-initiative`, body).then(response => {
                 // get body data
                 if(response.status === 200) {

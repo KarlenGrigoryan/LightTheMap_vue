@@ -179,12 +179,8 @@ import config from '../config'
           // For each place, get the icon, name and location.
           var bounds = new google.maps.LatLngBounds();
           places.forEach(function(place) {
-            console.log(place.geometry.location.lat())
-            console.log(place.geometry.location.lng())
-            
             _this.getCity(place.geometry.location.lat(), place.geometry.location.lng())
             if (!place.geometry) {
-              console.log("Returned place contains no geometry");
               return;
             }
             if (place.geometry.viewport) {
@@ -206,16 +202,13 @@ import config from '../config'
         },
       methods: {
         getCity(lat, lng) {
-          console.log('workkkk')
           this.$http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&sensor=false?key=AIzaSyBVsiPF2PDAmQ7AUqOJrQr82_9dMjVAdsc?project=My Project 21800', ).then(response => {
                 // Get body data
-               console.log(response)
               function findPosName(value) {
                       return value.types["0"] === 'locality';
                     }
                     var currentPost = response.body.results["0"].address_components.filter(findPosName)
                     this.value = currentPost["0"].long_name
-                    console.log(currentPost["0"].long_name)
                     this.getInitiatives(currentPost["0"].long_name);
               }, response => {// error callback
               
@@ -245,7 +238,6 @@ import config from '../config'
             }
         },
         chooseTag(tag) {
-          // console.log(this.tagsList)
           let _this = this;
           this.loader = true;
           let index = this.tags.indexOf(tag);
@@ -294,7 +286,6 @@ import config from '../config'
           }
         },
         chooseSort(sortVal) {
-          console.log(+sortVal);
           let _this = this;
           this.loader = true;
           this.sortVal = +sortVal;
@@ -307,7 +298,6 @@ import config from '../config'
           };
           this.$http.post(`${config.server.api}/find-initiative`, body).then(response => {
             // Get body data
-            console.log(response)
             _this.loader = false;
             _this.initiatives = response.body.data;
           }, response => {// error callback
@@ -343,7 +333,6 @@ import config from '../config'
           this.$http.get(`${config.server.api}/api/get-tags`).then(response => {
             // get body data
             _this.tagsList = response.body.data[0].tags;
-            console.log(_this.tags)
           }, response => {// error callback
           });
         },
